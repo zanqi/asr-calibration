@@ -1,0 +1,12 @@
+openai-whisper
+transformers
+datasets
+torchaudio
+jiwer
+scikit-learn
+seaborn
+matplotlib
+accelerate
+ipykernel
+ipywidgets
+torchcodec
