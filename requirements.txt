@@ -8,5 +8,6 @@ seaborn
 matplotlib
 accelerate
 ipykernel
-ipywidgets
+ipywidgets>=8.1.8
 torchcodec
+jupyter>=1.1.1
