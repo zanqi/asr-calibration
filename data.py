@@ -21,8 +21,8 @@ test_commands = []
 babble_pool = []
 seen_slurp_ids = set()
 
-total_target = 300
-test_target = 200
+total_target = 3000
+test_target = 100
 while len(dev_commands) + len(test_commands) < total_target:
     try:
         row = next(dataset_iterator)

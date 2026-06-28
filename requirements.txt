@@ -11,3 +11,4 @@ ipykernel
 ipywidgets>=8.1.8
 torchcodec
 jupyter>=1.1.1
+huggingface_hub
