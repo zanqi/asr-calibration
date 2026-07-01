@@ -15,6 +15,12 @@ conda activate "$ENV_NAME"
 #    flash-attn can build/select against it.
 pip install torch torchvision torchaudio torchcodec --index-url https://download.pytorch.org/whl/cu130
 
+# Easiest source of nvcc without root, into this env:
+conda install -c nvidia cuda-nvcc cuda-toolkit -y     # ideally the 13.x build
+export CUDA_HOME="$CONDA_PREFIX"
+which nvcc && nvcc --version                            # must print, and say 13.x
+pip install -U flash-attn --no-build-isolation
+
 # 3. Transformers from source (Qwen3-Omni support) + accelerate
 pip install "git+https://github.com/huggingface/transformers"
 pip install accelerate

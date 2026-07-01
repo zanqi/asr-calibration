@@ -28,17 +28,8 @@ from datasets import load_dataset, Audio
 AUDIO_SAMPLING_RATE = 16000
 
 # No system prompt is set, matching the Qwen3-Omni eval (Qwen's benchmark guidance).
-TASK_PROMPT = """You are given the audio of a short two-person conversation. \
-Listen carefully and answer the question below using ONLY what is said in the audio.
-
-Question: {question}
-
-Rules:
-- If the answer is clearly audible, reply with ONLY the concise answer (a word or \
-short phrase), not a full sentence.
-- If the answer-critical part of the audio is masked by noise, garbled, or cut off \
-so that you cannot determine the answer, reply with "Clarification needed:" followed \
-by a SINGLE targeted question that asks the speaker for the exact missing detail."""
+TASK_PROMPT = """Please answer the question based on the audio.
+Question: {question}"""
 
 
 def build_prompt(question: str) -> str:
@@ -89,15 +80,15 @@ def run_model(model, processor, audio_array, sr, question, max_new_tokens):
         sf.write(wav_path, audio_array, sr)
 
         conversation = [
-            {
-                "role": "system",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": "You are Qwen, a virtual human developed by the Qwen Team, Alibaba Group, capable of perceiving auditory and visual inputs, as well as generating text and speech.",
-                    }
-                ],
-            },
+            # {
+            #     "role": "system",
+            #     "content": [
+            #         {
+            #             "type": "text",
+            #             "text": "You are Qwen, a virtual human developed by the Qwen Team, Alibaba Group, capable of perceiving auditory and visual inputs, as well as generating text and speech.",
+            #         }
+            #     ],
+            # },
             {
                 "role": "user",
                 "content": [
@@ -241,6 +232,7 @@ def main():
         raise SystemExit("OPENAI_API_KEY is not set.")
 
     ds = load_dataset(args.dataset, split=args.split, token=os.environ.get("HF_TOKEN"))
+
     ds = ds.cast_column("answerable_audio", Audio(decode=False))
     ds = ds.cast_column("unanswerable_audio", Audio(decode=False))
     if args.num_samples != -1:

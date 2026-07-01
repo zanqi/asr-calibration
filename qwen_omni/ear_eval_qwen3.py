@@ -37,19 +37,8 @@ from datasets import load_dataset, Audio
 # qwen3-omni's hf page says no system prompt should be set for
 # any eval benchmark
 
-TASK_PROMPT = """You are given the audio of a short two-person conversation. \
-Listen carefully and answer the question below using ONLY what is said in the audio.
-
-Question: {question}
-
-Rules:
-- If the answer is clearly audible, reply with ONLY the concise answer (a word or \
-short phrase), not a full sentence.
-- If the answer-critical part of the audio is masked by noise, garbled, or cut off \
-so that you cannot determine the answer, reply with "Clarification needed:" followed \
-by a SINGLE targeted question that \
-asks the speaker for the exact missing detail."
-"""
+TASK_PROMPT = """Please answer the question based on the audio.
+Question: {question}"""
 
 
 def build_prompt(question: str) -> str:
